@@ -17,7 +17,7 @@ protocol Flyable {
 	var airspeedVelocity: Double { get }
 }
 
-struct FlappyBird: Bird, Flyable {
+struct FlyingBird: Bird, Flyable {
 	let name: String
 	let flappyAmplitude: Double
 	let flappyFrequency: Double
@@ -31,11 +31,9 @@ struct Penguin: Bird {
 	let name: String
 }
 
-struct SwiftBird: Bird, Flyable {
+struct FastBird: Bird, Flyable {
 	var name: String { return "Swift \(version)" }
 	let version: Double
-	
-	// Swift is FASTER every version!
 	var airspeedVelocity: Double { return version * 1000.0 }
 }
 
