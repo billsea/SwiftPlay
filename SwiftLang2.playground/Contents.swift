@@ -466,6 +466,36 @@ var sc = SomeClass()
 let scstuff = sc.stuff()
 print(scstuff)
 
+
+//Protocol as a type
+protocol RandomNumberGenerator {
+  func random() -> Double
+}
+
+class Dice {
+  let sides: Int
+  let generator: RandomNumberGenerator //Protocol
+  init(sides: Int, generator: RandomNumberGenerator) {
+    self.sides = sides
+    self.generator = generator
+  }
+  func roll() -> Int {
+    return Int(generator.random() * Double(sides)) + 1
+  }
+}
+
+//myGenerator adopts the RandomNumberGenerator protocol
+struct myGenerator : RandomNumberGenerator {
+  func random() -> Double {
+    return 1.1
+  }
+}
+
+//create instance to pass to the dice
+let theGenerator = myGenerator()
+//init the dice
+let theDice = Dice(sides: 5,generator: theGenerator)
+
 //Error Handling  ---------------------------------------------
 //	In Swift, it's possible to declare that a function throws an error. It is, therefore, the caller's responsibility to handle the error or propagate it. This is similar to how Java handles the situation.
 //
