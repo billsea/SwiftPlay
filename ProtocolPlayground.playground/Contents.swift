@@ -79,5 +79,37 @@ Penguin(name: "King Penguin").canFly  // false
 
 UnladenSwallow.european.airspeedVelocity
 
-let swbird = SwiftBird(version: 0.1).name
+let swbird = FlyingBird(version: 0.1, flappyAmplitude: 1.5).name
 print(swbird)
+
+
+
+
+//Protocol as a type
+protocol RandomNumberGenerator {
+  func random() -> Double
+}
+
+class Dice {
+  let sides: Int
+  let generator: RandomNumberGenerator //Protocol
+  init(sides: Int, generator: RandomNumberGenerator) {
+    self.sides = sides
+    self.generator = generator
+  }
+  func roll() -> Int {
+    return Int(generator.random() * Double(sides)) + 1
+  }
+}
+
+//myGenerator adopts the RandomNumberGenerator protocol
+struct myGenerator : RandomNumberGenerator {
+  func random() -> Double {
+    return 1.1
+  }
+}
+
+//create instance to pass to the dice
+let theGenerator = myGenerator()
+//init the dice
+let theDice = Dice(sides: 5,generator: theGenerator)
