@@ -341,6 +341,60 @@ func iterateArray<T>(_ myArray:[T]) {
 iterateArray([100,200])
 iterateArray(["floyd","zeppelin"])
 
+//Generic class
+protocol smokeable {
+  func smokeit()
+}
+
+class smokingbar<T:smokeable> {
+  func dostuff(){}
+  var tmp : String = ""
+}
+
+struct cigar : smokeable {
+  func smokeit() {
+    print("smoking")
+  }
+}
+
+//cigar must conform to smokeable protocol to satisfy smokingbar class constraint
+let bar = smokingbar<cigar>()
+
+
+//Advanced generic class with more constraints etc..
+protocol Stackable: class { //constraint: conforming type must be a class
+  //An Associated Type is just
+  // different syntax for Generics in protocols(i.e. protocol Stackable:<Element>)
+  //An associated type gives a placeholder name to a type that is used as part of the protocol
+  //the Element alias provides a way to refer to the type of the items in a Container
+  associatedtype Element: Comparable //for example: Element is what we are refering to in this protocol
+  func push(_ element: Element)
+  func pop() -> Element?
+}
+
+class Stack<Element>: Stackable where Element: Comparable { //constraint: Element must be Comparable
+  private var storage: [Element] = []
+  func push(_ element: Element) { storage.append(element) }
+  func pop() -> Element? { return storage.popLast() }
+}
+
+var stack1 = Stack<Int>()
+stack1.push(13)
+stack1.push(3)
+stack1.pop()
+
+var stack2 = Stack<Int>()
+
+func pushToAll<S: Stackable>(stacks: [S], value: S.Element) {
+  stacks.forEach { $0.push(value) }
+}
+
+pushToAll(stacks: [stack1, stack2], value: 4)
+
+dump(stack1)
+dump(stack2)
+
+
 
 //A Closure is a Function without a name --------------------------------------
 // example
